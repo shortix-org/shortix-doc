@@ -1,0 +1,24 @@
+# Tasks: Implement Backend
+
+- [x] Initialize `shortix-lambda` project (TypeScript, Node 18)
+    - [x] Configure `tsconfig.json` & `package.json`
+    - [x] Install dependencies (`aws-sdk`, `nanoid`, types)
+- [x] Implement Shared Lambda Layer
+    - [x] Create `shared` utilities (DynamoDB client, response helpers)
+    - [x] Configure Layer in `03-application.yaml`
+- [x] Implement `create_url` Handler
+    - [x] Validate input (long URL)
+    - [x] Generate short code (NanoID)
+    - [x] Save to DynamoDB
+- [x] Implement `get_urls` Handler
+    - [x] Query GSI by User ID
+    - [x] Return list of URLs
+- [x] Implement `redirect_url` Handler
+    - [x] Get Item by Short Code
+    - [x] Return 301 response
+- [x] Package/Build Script
+    - [x] Create `build` script to compile TS
+    - [x] Create `package` script to zip artifacts and layer
+- [x] Implement Unit Tests
+    - [x] Add tests for business logic in handlers
+    - [x] Add tests for shared utilities
