@@ -32,7 +32,7 @@ To maintain separation of concerns, the project will be divided into two separat
 *   **Database**: Amazon DynamoDB (On-demand capacity).
 *   **Auth Provider**: Amazon Cognito User Pool.
 *   **Infrastructure as Code**: AWS CloudFormation.
-*   **Network**: AWS VPC (Private Subnets for Lambda, NAT Gateway, Endpoints).
+*   **Network**: AWS VPC (Private Subnets for Lambda, VPC Gateway Endpoints for DynamoDB/S3).
 
 ## 4. CloudFormation Strategy
 To ensure manageability and logical separation, the infrastructure will be split into 3 distinct CloudFormation templates. These stacks will likely export values (Outputs) to be used by dependent stacks.
@@ -42,8 +42,8 @@ To ensure manageability and logical separation, the infrastructure will be split
 *   **Resources**:
     *   VPC.
     *   Public & Private Subnets.
-    *   Internet Gateway & NAT Gateway (for Lambda internet access).
-    *   VPC Endpoints (DynamoDB, S3) to reduce NAT costs.
+    *   Internet Gateway (for public access).
+    *   VPC Gateway Endpoints (DynamoDB, S3) to provide private access to AWS services (Free and no NAT required).
 *   **Outputs**: `VpcId`, `PrivateSubnetIds`, `PublicSubnetIds`.
 
 ### File 2: `02-persistence-auth.yaml`

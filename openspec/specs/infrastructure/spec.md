@@ -10,7 +10,7 @@ The system SHALL provide a secure networking foundation on AWS.
 - **WHEN** the networking stack is deployed
 - **THEN** a VPC with public and private subnets is created
 - **AND** an Internet Gateway is attached for public access
-- **AND** a NAT Gateway is configured for private subnet internet access
+- **AND** VPC Gateway Endpoints for DynamoDB and S3 are configured for private access to AWS services
 
 ### Requirement: Persistence and Auth Infrastructure
 The system SHALL provision stateful resources for data and identity.
