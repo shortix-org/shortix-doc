@@ -11,6 +11,7 @@ The system SHALL provide a web interface built with modern technologies.
 - **THEN** it must use React with TypeScript
 - **AND** it must use Vite as the build tool
 - **AND** it must use Tailwind CSS v4 for styling
+- **AND** it must use TanStack Query for server state management
 
 ### Requirement: User Authentication Interface
 The system SHALL provide screens for users to manage their identity.
