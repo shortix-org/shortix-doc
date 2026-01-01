@@ -35,3 +35,47 @@ Given a short code "xyz9999" does not exist in DynamoDB.
 When `redirect_url` is invoked with `short_code="xyz9999"`.
 Then it should return a 404 Not Found response.
 
+### Requirement: Automated Link Verification
+The system SHALL verify every new shortened URL for liveness and safety asynchronously.
+
+#### Scenario: Newly Created Link
+Given a user creates a new short link
+Then the link status is initially set to `PENDING`
+And a verification workflow is triggered
+
+#### Scenario: Processing Transition
+Given a link in `PENDING` status
+When the verification workflow starts
+Then the link status updates to `PROCESSING`
+
+#### Scenario: Valid Link
+Given a link in `PROCESSING` status
+When the liveness check returns 200 OK
+And the malware scan returns CLEAN
+Then the link status is updated to `ACTIVE`
+
+#### Scenario: Dead Link
+Given a link in `PROCESSING` status
+When the liveness check fails (404 or unreachable)
+Then the link status is updated to `INACTIVE`
+
+#### Scenario: Malicious Link
+Given a link in `PROCESSING` status
+When the malware scan detects a threat (simulated 30% chance)
+Then the link status is updated to `BANNED`
+And the user account remains active
+
+#### Scenario: System Failure
+Given a verification workflow is running
+When a system error occurs (e.g. Lambda timeout, unhandled exception)
+Then the link status is updated to `FAILED`
+
+### Requirement: Serverless Compute Configuration
+The backend compute resources SHALL be configured for optimal connectivity and cost.
+
+#### Scenario: Network Access
+Given the backend functions require access to public internet and AWS services
+When the functions are deployed
+Then they SHALL assume the default execution role network configuration (outside VPC)
+And they SHALL NOT require a NAT Gateway or VPC Endpoints for connectivity
+
